@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Wedding Chatbot Design System - Elegant and Modern */
+
+@layer base {
+  :root {
+    /* Wedding Theme Colors */
+    --background: 352 100% 98%;
+    --foreground: 340 15% 15%;
+    
+    /* Wedding Primary - Rose Gold */
+    --primary: 15 85% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 15 100% 85%;
+    
+    /* Elegant Cards */
+    --card: 0 0% 100%;
+    --card-foreground: 340 15% 15%;
+    
+    /* Chat Interface */
+    --chat-user: 15 85% 65%;
+    --chat-user-foreground: 0 0% 100%;
+    --chat-bot: 0 0% 100%;
+    --chat-bot-foreground: 340 15% 15%;
+    
+    /* UI Elements */
+    --secondary: 340 5% 95%;
+    --secondary-foreground: 340 15% 25%;
+    --muted: 340 5% 90%;
+    --muted-foreground: 340 10% 50%;
+    --accent: 15 100% 85%;
+    --accent-foreground: 340 15% 15%;
+    --border: 340 15% 90%;
+    --input: 0 0% 100%;
+    --ring: 15 85% 65%;
+    --radius: 0.75rem;
+    
+    /* Gradients */
+    --gradient-wedding: linear-gradient(135deg, hsl(15 85% 65%), hsl(340 85% 75%));
+    --gradient-subtle: linear-gradient(180deg, hsl(352 100% 98%), hsl(340 50% 97%));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(15 85% 65% / 0.15);
+    --shadow-chat: 0 2px 8px hsl(340 15% 15% / 0.1);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-subtle);
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .gradient-wedding {
+    background: var(--gradient-wedding);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-chat {
+    box-shadow: var(--shadow-chat);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}
