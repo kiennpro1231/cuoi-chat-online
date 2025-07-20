@@ -159,75 +159,78 @@ Nếu khách hàng cần đặt thiệp, liên hệ:
       </div>
 
       {/* Chat Container */}
-      <Card className="w-full max-w-[380px] flex flex-col shadow-soft rounded-b-xl" style={{ height: '500px' }}>
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          {messages.map(message => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.sender === 'user' ? 'justify-end' : 'justify-start'
-              } animate-slide-up`}
-            >
-              <div
-                className={`max-w-[85%] rounded-lg px-3 py-2 ${
-                  message.sender === 'user'
-                    ? 'bg-chat-user text-chat-user-foreground ml-2'
-                    : 'bg-chat-bot text-chat-bot-foreground mr-2 shadow-chat'
-                }`}
-              >
-                <p className="text-sm leading-relaxed">{message.content}</p>
-                <span className="text-xs opacity-70 mt-1 block">
-                  {message.timestamp.toLocaleTimeString('vi-VN', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}
-                </span>
-              </div>
-            </div>
-          ))}
-
-          {isLoading && (
-            <div className="flex justify-start animate-slide-up">
-              <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
-                <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
-                  <div
-                    className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-                    style={{ animationDelay: '0.2s' }}
-                  ></div>
-                  <div
-                    className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-                    style={{ animationDelay: '0.4s' }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
+      <Card
+  className="w-full max-w-[380px] flex flex-col shadow-soft rounded-b-xl"
+  style={{ height: '500px' }}
+>
+  {/* Messages scrollable */}
+  <div className="flex-1 overflow-y-auto p-3 space-y-2">
+    {messages.map(message => (
+      <div
+        key={message.id}
+        className={`flex ${
+          message.sender === 'user' ? 'justify-end' : 'justify-start'
+        } animate-slide-up`}
+      >
+        <div
+          className={`max-w-[85%] rounded-lg px-3 py-2 ${
+            message.sender === 'user'
+              ? 'bg-chat-user text-chat-user-foreground ml-2'
+              : 'bg-chat-bot text-chat-bot-foreground mr-2 shadow-chat'
+          }`}
+        >
+          <p className="text-sm leading-relaxed">{message.content}</p>
+          <span className="text-xs opacity-70 mt-1 block">
+            {message.timestamp.toLocaleTimeString('vi-VN', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </span>
         </div>
+      </div>
+    ))}
 
-        {/* Input Area */}
-        <div className="border-t border-border p-3">
-          <div className="flex items-center gap-2">
-            <Input
-              value={inputMessage}
-              onChange={e => setInputMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Nhập câu hỏi về thiệp cưới..."
-              disabled={isLoading}
-              className="flex-1"
-            />
-            <Button
-              onClick={sendMessage}
-              disabled={isLoading || !inputMessage.trim()}
-              className="gradient-wedding hover:opacity-90 transition-opacity"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
+    {isLoading && (
+      <div className="flex justify-start animate-slide-up">
+        <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
+            <div
+              className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+              style={{ animationDelay: '0.2s' }}
+            ></div>
+            <div
+              className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+              style={{ animationDelay: '0.4s' }}
+            ></div>
           </div>
         </div>
-      </Card>
+      </div>
+    )}
+    <div ref={messagesEndRef} />
+  </div>
+
+  {/* Input Area fixed */}
+  <div className="border-t border-border p-3 flex-shrink-0">
+    <div className="flex items-center gap-2">
+      <Input
+        value={inputMessage}
+        onChange={e => setInputMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="Nhập câu hỏi về thiệp cưới..."
+        disabled={isLoading}
+        className="flex-1"
+      />
+      <Button
+        onClick={sendMessage}
+        disabled={isLoading || !inputMessage.trim()}
+        className="gradient-wedding hover:opacity-90 transition-opacity"
+      >
+        <Send className="h-4 w-4" />
+      </Button>
+    </div>
+  </div>
+</Card>
     </div>
   );
 };
