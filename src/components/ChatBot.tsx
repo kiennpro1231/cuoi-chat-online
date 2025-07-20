@@ -27,7 +27,6 @@ const ChatBot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Lấy API Key từ biến môi trường
   const getApiKey = () => import.meta.env.VITE_OPENROUTER_API_KEY;
 
   useEffect(() => {
@@ -135,103 +134,100 @@ Nếu khách hàng cần đặt thiệp, liên hệ:
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-accent/10">
+    <div className="flex flex-col items-center justify-center w-full h-[500px] bg-gradient-to-br from-background to-accent/10">
       {/* Header */}
-      <div className="bg-card border-b border-border shadow-soft">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="bg-card border-b border-border shadow-soft w-full max-w-[380px] rounded-t-xl">
+        <div className="px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-full gradient-wedding">
               <Heart className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Tư vấn thiệp cưới</h1>
-              <p className="text-sm text-muted-foreground">Chatbot hỗ trợ 24/7</p>
+              <h1 className="text-lg font-bold text-foreground">Tư vấn thiệp cưới</h1>
+              <p className="text-xs text-muted-foreground">Chatbot hỗ trợ 24/7</p>
             </div>
           </div>
-
-          {/* Button Xóa hội thoại */}
           <Button
             onClick={clearMessages}
             variant="destructive"
-            className="flex items-center gap-2"
+            size="sm"
+            className="flex items-center gap-1"
           >
-            <Trash2 className="h-4 w-4" /> 
+            <Trash2 className="h-4 w-4" />
           </Button>
         </div>
       </div>
 
       {/* Chat Container */}
-      <div className="flex-1 max-w-4xl mx-auto w-full px-2 sm:px-4 py-4 sm:py-6">
-        <Card className="h-[calc(100vh-200px)] sm:h-[600px] flex flex-col shadow-soft">
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-2 sm:space-y-4">
-            {messages.map(message => (
+      <Card className="w-full max-w-[380px] flex flex-col shadow-soft rounded-b-xl" style={{ height: '500px' }}>
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          {messages.map(message => (
+            <div
+              key={message.id}
+              className={`flex ${
+                message.sender === 'user' ? 'justify-end' : 'justify-start'
+              } animate-slide-up`}
+            >
               <div
-                key={message.id}
-                className={`flex ${
-                  message.sender === 'user' ? 'justify-end' : 'justify-start'
-                } animate-slide-up`}
+                className={`max-w-[85%] rounded-lg px-3 py-2 ${
+                  message.sender === 'user'
+                    ? 'bg-chat-user text-chat-user-foreground ml-2'
+                    : 'bg-chat-bot text-chat-bot-foreground mr-2 shadow-chat'
+                }`}
               >
-                <div
-                  className={`max-w-[85%] sm:max-w-[70%] rounded-lg px-3 sm:px-4 py-2 sm:py-3 ${
-                    message.sender === 'user'
-                      ? 'bg-chat-user text-chat-user-foreground ml-2 sm:ml-4'
-                      : 'bg-chat-bot text-chat-bot-foreground mr-2 sm:mr-4 shadow-chat'
-                  }`}
-                >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
-                  <span className="text-xs opacity-70 mt-2 block">
-                    {message.timestamp.toLocaleTimeString('vi-VN', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </span>
-                </div>
+                <p className="text-sm leading-relaxed">{message.content}</p>
+                <span className="text-xs opacity-70 mt-1 block">
+                  {message.timestamp.toLocaleTimeString('vi-VN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </span>
               </div>
-            ))}
-
-            {isLoading && (
-              <div className="flex justify-start animate-slide-up">
-                <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
-                    <div
-                      className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-                      style={{ animationDelay: '0.2s' }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-                      style={{ animationDelay: '0.4s' }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Area */}
-          <div className="border-t border-border p-4">
-            <div className="flex items-center gap-2">
-              <Input
-                value={inputMessage}
-                onChange={e => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Nhập câu hỏi về thiệp cưới..."
-                disabled={isLoading}
-                className="flex-1"
-              />
-              <Button
-                onClick={sendMessage}
-                disabled={isLoading || !inputMessage.trim()}
-                className="gradient-wedding hover:opacity-90 transition-opacity"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
             </div>
+          ))}
+
+          {isLoading && (
+            <div className="flex justify-start animate-slide-up">
+              <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
+                  <div
+                    className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+                    style={{ animationDelay: '0.2s' }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+                    style={{ animationDelay: '0.4s' }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="border-t border-border p-3">
+          <div className="flex items-center gap-2">
+            <Input
+              value={inputMessage}
+              onChange={e => setInputMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Nhập câu hỏi về thiệp cưới..."
+              disabled={isLoading}
+              className="flex-1"
+            />
+            <Button
+              onClick={sendMessage}
+              disabled={isLoading || !inputMessage.trim()}
+              className="gradient-wedding hover:opacity-90 transition-opacity"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
           </div>
-        </Card>
-      </div>
+        </div>
+      </Card>
     </div>
   );
 };
