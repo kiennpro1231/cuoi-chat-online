@@ -16,7 +16,7 @@ const ChatBot = () => {
   const initialMessage: Message = {
     id: '1',
     content:
-      'Xin chào! Tôi là chatbot tư vấn thiệp cưới ONLINE. Tôi có thể giúp bạn tìm hiểu về các gói dịch vụ thiệp cưới của chúng tôi. Bạn có câu hỏi gì không?',
+      'Xin chào! Tôi là chatbot tư vấn thiệp cưới ONLINE. Bạn muốn tìm hiểu về các gói dịch vụ không?',
     sender: 'bot',
     timestamp: new Date()
   };
@@ -74,16 +74,37 @@ const ChatBot = () => {
           messages: [
             {
               role: 'system',
-              content: `Bạn là chatbot tư vấn thiệp cưới ONLINE.
+              content: `Bạn là chatbot tư vấn **thiệp cưới online**.
 
-Gói dịch vụ:
-- Gói thường: 169k
-- Pro: 289k
-- VIP: 510k
-- SVIP: 730k
+Nhiệm vụ: Giải đáp về thiệp cưới online (website thiệp, nhạc nền, RSVP, QR mừng cưới). 
+Nếu khách hỏi về thiệp giấy, hãy nhấn mạnh rằng đây là **dịch vụ thiệp cưới online**.
 
-Nếu khách hàng cần đặt thiệp, liên hệ:
-- Zalo: 0967021887
+**Bảng giá & tính năng:**
+- **Gói Thường (169k):**
+  ✔️ Thời gian sử dụng: 6 tháng  
+  ✔️ Hỗ trợ thiết kế từ A–Z  
+  ✔️ 10 ảnh cưới, thông tin Dâu–Rể  
+  ❌ Không có RSVP, không Google Maps
+
+- **Gói Pro (289k):**
+  ✔️ 1 năm sử dụng  
+  ✔️ 20 ảnh cưới, Google Maps, RSVP  
+  ✔️ Tùy chỉnh màu sắc, font chữ  
+  ❌ Không loại bỏ quảng cáo, không video
+
+- **Gói VIP (510k):**
+  ✔️ Trọn đời  
+  ✔️ Không giới hạn ảnh, giao diện VIP  
+  ✔️ QR code mừng cưới, video cưới, logo riêng  
+  ✔️ Tùy chỉnh bố cục từng phần
+
+- **Gói SVIP (730k):**
+  ✔️ Trọn đời + tất cả tính năng VIP  
+  ✔️ Gửi thiệp cá nhân hóa cho 1000+ mỗi người 1 tên hiện rõ trên thiệp  
+  ✔️ Dành cho đám cưới đối với khách khó tính yêu cầu có tên riêng
+
+**Liên hệ đặt thiệp:**  
+- Zalo: 0967021887  
 - Website: https://thiepcuoi.pudfoods.com`
             },
             {
@@ -134,103 +155,103 @@ Nếu khách hàng cần đặt thiệp, liên hệ:
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[500px] bg-gradient-to-br from-background to-accent/10">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-accent/10">
       {/* Header */}
-      <div className="bg-card border-b border-border shadow-soft w-full max-w-[380px] rounded-t-xl">
-        <div className="px-4 py-3 flex items-center justify-between">
+      <div className="bg-card border-b border-border shadow-soft">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-full gradient-wedding">
               <Heart className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-foreground">Tư vấn thiệp cưới</h1>
-              <p className="text-xs text-muted-foreground">Chatbot hỗ trợ 24/7</p>
+              <h1 className="text-xl font-bold text-foreground">Tư vấn thiệp cưới</h1>
+              <p className="text-sm text-muted-foreground">Chatbot hỗ trợ 24/7</p>
             </div>
           </div>
+
+          {/* Button Xóa hội thoại */}
           <Button
             onClick={clearMessages}
             variant="destructive"
-            size="sm"
-            className="flex items-center gap-1"
+            className="flex items-center gap-2"
           >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-4 w-4" /> 
           </Button>
         </div>
       </div>
 
       {/* Chat Container */}
-      <Card
-  className="w-full max-w-[380px] flex flex-col shadow-soft rounded-b-xl"
-  style={{ height: '500px' }}
->
-  {/* Messages scrollable */}
-  <div className="flex-1 overflow-y-auto p-3 space-y-2">
-    {messages.map(message => (
-      <div
-        key={message.id}
-        className={`flex ${
-          message.sender === 'user' ? 'justify-end' : 'justify-start'
-        } animate-slide-up`}
-      >
-        <div
-          className={`max-w-[85%] rounded-lg px-3 py-2 ${
-            message.sender === 'user'
-              ? 'bg-chat-user text-chat-user-foreground ml-2'
-              : 'bg-chat-bot text-chat-bot-foreground mr-2 shadow-chat'
-          }`}
-        >
-          <p className="text-sm leading-relaxed">{message.content}</p>
-          <span className="text-xs opacity-70 mt-1 block">
-            {message.timestamp.toLocaleTimeString('vi-VN', {
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </span>
-        </div>
-      </div>
-    ))}
+      <div className="flex-1 max-w-4xl mx-auto w-full px-2 sm:px-4 py-4 sm:py-6">
+        <Card className="w-full max-w-[380px] flex flex-col shadow-soft rounded-b-xl" style={{ height: '500px' }}>
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+            {messages.map(message => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.sender === 'user' ? 'justify-end' : 'justify-start'
+                } animate-slide-up`}
+              >
+                <div
+                  className={`max-w-[85%] rounded-lg px-3 py-2 ${
+                    message.sender === 'user'
+                      ? 'bg-chat-user text-chat-user-foreground ml-2'
+                      : 'bg-chat-bot text-chat-bot-foreground mr-2 shadow-chat'
+                  }`}
+                >
+                  <p className="text-sm leading-relaxed">{message.content}</p>
+                  <span className="text-xs opacity-70 mt-1 block">
+                    {message.timestamp.toLocaleTimeString('vi-VN', {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+              </div>
+            ))}
 
-    {isLoading && (
-      <div className="flex justify-start animate-slide-up">
-        <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
-            <div
-              className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-              style={{ animationDelay: '0.2s' }}
-            ></div>
-            <div
-              className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
-              style={{ animationDelay: '0.4s' }}
-            ></div>
+            {isLoading && (
+              <div className="flex justify-start animate-slide-up">
+                <div className="bg-chat-bot text-chat-bot-foreground rounded-lg px-4 py-3 mr-4 shadow-chat">
+                  <div className="flex items-center gap-1">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-typing-dots"></div>
+                    <div
+                      className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+                      style={{ animationDelay: '0.2s' }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-primary rounded-full animate-typing-dots"
+                      style={{ animationDelay: '0.4s' }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
-        </div>
-      </div>
-    )}
-    <div ref={messagesEndRef} />
-  </div>
 
-  {/* Input Area fixed */}
-  <div className="border-t border-border p-3 flex-shrink-0">
-    <div className="flex items-center gap-2">
-      <Input
-        value={inputMessage}
-        onChange={e => setInputMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
-        placeholder="Nhập câu hỏi về thiệp cưới..."
-        disabled={isLoading}
-        className="flex-1"
-      />
-      <Button
-        onClick={sendMessage}
-        disabled={isLoading || !inputMessage.trim()}
-        className="gradient-wedding hover:opacity-90 transition-opacity"
-      >
-        <Send className="h-4 w-4" />
-      </Button>
-    </div>
-  </div>
-</Card>
+          {/* Input Area */}
+          <div className="border-t border-border p-3">
+            <div className="flex items-center gap-2">
+              <Input
+                value={inputMessage}
+                onChange={e => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Nhập câu hỏi về thiệp cưới..."
+                disabled={isLoading}
+                className="flex-1"
+              />
+              <Button
+                onClick={sendMessage}
+                disabled={isLoading || !inputMessage.trim()}
+                className="gradient-wedding hover:opacity-90 transition-opacity"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
